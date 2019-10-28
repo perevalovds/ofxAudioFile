@@ -125,7 +125,7 @@ void ofxAudioFile::load_wav( std::string path ){
         if(buffer!=nullptr){ delete buffer; }
         buffer = pSampleData;
         this->sampleRate = sampleRate;
-        this->buffersize = totalSampleCount;
+		this->buffersize = totalSampleCount * channels; //totalSampleCount; (perevalovds)
         this->nchannels = channels;
         this->slength = this->buffersize / this->nchannels;
         this->filePath = path;
