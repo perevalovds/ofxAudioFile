@@ -9,7 +9,30 @@ public:
     ofxAudioFile(const ofxAudioFile& other);
     ofxAudioFile& operator= (const ofxAudioFile& other);
     ~ofxAudioFile();
-    
+	
+	/*!
+	@brief saves the audio data to a file
+	@param[in] filePath absolute, please warp it to ofToDataPath
+	*/
+	/* Example usage of wav save: 
+	void test_saving_wav() {
+		int sr = 44100;
+		int duration = sr;
+		float freq = 440;
+		float volume = 0.5;
+		vector<short> wav(2 * duration);
+		for (int i = 0; i < duration; i++) {
+			float phase = freq * i / sr;
+			float v = sin(phase * M_TWO_PI) * volume;
+			short val = int(v * 32765);
+			wav[2 * i] = wav[2 * i + 1] = val;
+		}
+		ofxAudioFile::save_wav_16bit_stereo(ofToDataPath("test_sin.wav"), wav.data(), duration);
+	}
+	*/
+	static void    save_wav_16bit_stereo(std::string file_name, short *samples, int samples_count);
+
+
     /*!
     @brief loads the audio data from a file
     @param[in] filePath absolute or relative path to audio file

@@ -93,6 +93,27 @@ bool ofxAudioFile::loaded() const{
 
 
 // ------------------------- AUDIO LOADING ROTUINES ---------------------------
+void ofxAudioFile::save_wav_16bit_stereo(std::string file_name, short *samples, int samples_count) {
+	drwav_data_format format;
+	format.container = drwav_container_riff;     // <-- drwav_container_riff = normal WAV files, drwav_container_w64 = Sony Wave64.
+	format.format = DR_WAVE_FORMAT_PCM;          // <-- Any of the DR_WAVE_FORMAT_* codes.
+	format.channels = 2;
+	format.sampleRate = 44100;
+	format.bitsPerSample = 16;
+
+	drwav wavfile;
+	drwav_init_file_write(&wavfile, file_name.c_str(), &format);
+
+	int frame_count = samples_count / 2;
+	drwav_uint64 framesWritten = drwav_write_pcm_frames(&wavfile, frame_count, samples);
+
+	drwav_uninit(&wavfile);
+	//cout << "WAV saved to " << file_name << endl;
+}
+
+
+
+
 void ofxAudioFile::load( std::string path ){
     std::string extension = path.substr(path.find_last_of(".") + 1 );
     std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);   
