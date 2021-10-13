@@ -24,7 +24,7 @@ public:
 		for (int i = 0; i < duration; i++) {
 			float phase = freq * i / sr;
 			float v = sin(phase * M_TWO_PI) * volume;
-			short val = int(v * 32765);
+			short val = int(v * 32767);
 			wav[2 * i] = wav[2 * i + 1] = val;
 		}
 		ofxAudioFile::save_wav_16bit_stereo(ofToDataPath("test_sin.wav"), wav.data(), duration);
